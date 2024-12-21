@@ -1,0 +1,21 @@
+<h1>Tasks</h1>
+
+<h2>Pending Tasks</h2>
+<% @pending_tasks.each do |task| %>
+  <p><%= task.title %> - <%= task.due_date %></p>
+  <%= link_to 'Edit', edit_task_path(task) %>
+  <%= link_to 'Delete', task_path(task), method: :delete %>
+  <%= link_to 'Mark as Completed', mark_as_completed_task_path(task), method: :patch %>
+<% end %>
+
+<h2>Completed Tasks</h2>
+<% @completed_tasks.each do |task| %>
+  <p><%= task.title %></p>
+<% end %>
+
+<h2>Overdue Tasks</h2>
+<% @overdue_tasks.each do |task| %>
+  <p><%= task.title %></p>
+<% end %>
+
+<%= link_to 'New Task', new_task_path %>

@@ -51,6 +51,10 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem "letter_opener"
 end
 # added cssbundling-rails to use bootstrap 5
 gem "cssbundling-rails"
+
+gem "sidekiq", "~> 7.3"
+gem "whenever", require: false
