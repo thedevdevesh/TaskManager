@@ -1,21 +1,108 @@
-<h1>Tasks</h1>
+<div class="container mt-4">
+  <h1 class="text-center mb-4">Task Manager</h1>
 
-<h2>Pending Tasks</h2>
-<% @pending_tasks.each do |task| %>
-  <p><%= task.title %> - <%= task.due_date %></p>
-  <%= link_to 'Edit', edit_task_path(task) %>
-  <%= link_to 'Delete', task_path(task), method: :delete %>
-  <%= link_to 'Mark as Completed', mark_as_completed_task_path(task), method: :patch %>
-<% end %>
+  <!-- Filters -->
+  <ul class="nav nav-pills mb-4">
+    <li class="nav-item">
+      <a class="nav-link active" data-bs-toggle="pill" href="#pending">Pending</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="pill" href="#completed">Completed</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="pill" href="#overdue">Overdue</a>
+    </li>
+  </ul>
 
-<h2>Completed Tasks</h2>
-<% @completed_tasks.each do |task| %>
-  <p><%= task.title %></p>
-<% end %>
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <!-- Pending Tasks -->
+    <div class="tab-pane fade show active" id="pending">
+      <h3>Pending Tasks</h3>
+      <% if @pending_tasks.any? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Due Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @pending_tasks.each do |task| %>
+              <tr>
+                <td><%= task.title %></td>
+                <td><%= task.description %></td>
+                <td><%= task.due_date.strftime("%d %b %Y, %I:%M %p") %></td>
+                <td>
+                  <%= link_to "Mark as Completed", mark_as_completed_task_path(task), method: :patch, class: "btn btn-success btn-sm" %>
+                  <%= link_to "Edit", edit_task_path(task), class: "btn btn-primary btn-sm" %>
+                  <%= link_to "Delete", task_path(task), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No pending tasks found.</p>
+      <% end %>
+    </div>
 
-<h2>Overdue Tasks</h2>
-<% @overdue_tasks.each do |task| %>
-  <p><%= task.title %></p>
-<% end %>
+    <!-- Completed Tasks -->
+    <div class="tab-pane fade" id="completed">
+      <h3>Completed Tasks</h3>
+      <% if @completed_tasks.any? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Due Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @completed_tasks.each do |task| %>
+              <tr>
+                <td><%= task.title %></td>
+                <td><%= task.description %></td>
+                <td><%= task.due_date.strftime("%d %b %Y, %I:%M %p") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No completed tasks found.</p>
+      <% end %>
+    </div>
 
-<%= link_to 'New Task', new_task_path %>
+    <!-- Overdue Tasks -->
+    <div class="tab-pane fade" id="overdue">
+      <h3>Overdue Tasks</h3>
+      <% if @overdue_tasks.any? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Due Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @overdue_tasks.each do |task| %>
+              <tr>
+                <td><%= task.title %></td>
+                <td><%= task.description %></td>
+                <td><%= task.due_date.strftime("%d %b %Y, %I:%M %p") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No overdue tasks found.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <%= link_to "Add New Task", new_task_path, class: "btn btn-primary mt-3" %>
+</div>
