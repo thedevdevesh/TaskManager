@@ -7,7 +7,7 @@ Sidekiq.configure_server do |config|
   Sidekiq::Cron::Job.load_from_hash({
     "reminder_job_every_30_minutes" => {
       "class" => "ReminderJob",
-      "cron" => "*/30 * * * *",  # Run every 10 minutes
+      "cron" => "*/30 * * * *",  # Run every 30 minutes
       "queue" => "default"
     }
   })

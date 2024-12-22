@@ -11,5 +11,12 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe TasksHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:task) { create(:task, due_date: Time.current + 2.days) }
+
+  describe "#formatted_due_date" do
+    it "returns the correct formatted date" do
+      formatted_date = helper.formatted_due_date(task)
+      expect(formatted_date).to eq(task.due_date.strftime("%d %b %Y, %I:%M %p"))
+    end
+  end
 end

@@ -4,11 +4,4 @@ class Task < ApplicationRecord
   # Validations
   validates :title, presence: true
   validates :due_date, presence: true
-
-  private
-
-  # Sets the default status for tasks to 'pending' if not already set
-  def set_default_status
-    self.status ||= :pending
-  end
 end
