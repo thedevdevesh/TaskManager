@@ -5,9 +5,20 @@ require "sidekiq-cron"
 Sidekiq.configure_server do |config|
   # Setup the cron jobs
   Sidekiq::Cron::Job.load_from_hash({
-    "reminder_job_every_minute" => {
+    "reminder_job_every_30_minutes" => {
       "class" => "ReminderJob",
-      "cron" => "* * * * *",  # Run every minute
+      "cron" => "*/30 * * * *",  # Run every 10 minutes
+      "queue" => "default"
+    }
+  })
+end
+
+Sidekiq.configure_server do |config|
+  # Load cron jobs
+  Sidekiq::Cron::Job.load_from_hash({
+    "status_update_job_every_10_minutes" => {
+      "class" => "StatusUpdateJob",
+      "cron" => "*/10 * * * *",  # Run every 10 minutes
       "queue" => "default"
     }
   })

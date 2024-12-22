@@ -3,8 +3,6 @@ class TasksController < ApplicationController
 
   # Lists all tasks categorized by status
   def index
-    # Recalculate statuses for all pending tasks
-    Task.pending.each(&:update_status!)
     @pending_tasks = Task.pending.order(due_date: :asc)
     @completed_tasks = Task.completed.order(due_date: :desc)
     @overdue_tasks = Task.overdue.order(due_date: :desc)
@@ -18,16 +16,12 @@ class TasksController < ApplicationController
   # Creates a new task
   def create
     @task = Task.new(task_params)
-    Rails.logger.debug(@task.errors.full_messages)
-
     if @task.save
-      flash[:notice] = "Task created successfully."  # Success message
-      redirect_to tasks_path  # Redirect after successful creation
+      flash[:notice] = "Task created successfully."
+      redirect_to tasks_path
     else
-      Rails.logger.debug(@task.errors.full_messages)
-
-      flash.now[:alert] = "There was an error creating the task."  # Show error message if task creation fails
-      render :new  # Re-render the form if validation fails
+      flash.now[:alert] = "There was an error creating the task."
+      render :new
     end
   end
 
@@ -37,19 +31,19 @@ class TasksController < ApplicationController
   # Updates an existing task
   def update
     if @task.update(task_params)
-      flash[:notice] = "Task updated successfully."  # Success message
-      redirect_to tasks_path  # Redirect after successful update
+      flash[:notice] = "Task updated successfully."
+      redirect_to tasks_path
     else
-      flash[:alert] = "There was an error updating the task."  # Show error message if update fails
-      render :edit  # Re-render the edit form if validation fails
+      flash[:alert] = "There was an error updating the task."
+      render :edit
     end
   end
 
   # Deletes a task
   def destroy
     @task.destroy
-    flash[:notice] = "Task deleted successfully."  # Success message
-    redirect_to tasks_path  # Redirect after deletion
+    flash[:notice] = "Task deleted successfully."
+    redirect_to tasks_path
   end
 
   # Marks a task as completed
