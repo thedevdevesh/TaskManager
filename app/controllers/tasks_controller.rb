@@ -52,21 +52,24 @@ class TasksController < ApplicationController
 
   # Marks a task as completed
   def mark_as_completed
-    if @task.pending? # Ensure only pending tasks can be marked as completed
-      @task.update(status: "completed")
+    if @task.pending?
+      @task.update(status: :completed)
       flash[:notice] = "Task marked as completed."
-      redirect_to tasks_path
     else
       flash[:alert] = "Only pending tasks can be marked as completed."
-      redirect_to tasks_path
     end
+    redirect_to tasks_path
   end
 
   private
 
   # Sets the task instance for actions requiring a specific task
   def set_task
-    @task = Task.find(params[:id])
+    @task = Task.find_by(id: params[:id])
+    unless @task
+      flash[:alert] = "Task not found."
+      redirect_to tasks_path
+    end
   end
 
   # Permitted parameters for task creation and updates

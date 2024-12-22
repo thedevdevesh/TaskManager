@@ -20,30 +20,7 @@
     <div class="tab-pane fade show active" id="pending">
       <h3>Pending Tasks</h3>
       <% if @pending_tasks.any? %>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Due Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @pending_tasks.each do |task| %>
-              <tr>
-                <td><%= task.title %></td>
-                <td><%= task.description %></td>
-                <td><%= task.due_date.strftime("%d %b %Y, %I:%M %p") %></td>
-                <td>
-                  <%= link_to "Mark as Completed", mark_as_completed_task_path(task), method: :patch, class: "btn btn-success btn-sm" %>
-                  <%= link_to "Edit", edit_task_path(task), class: "btn btn-primary btn-sm" %>
-                  <%= link_to "Delete", task_path(task), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+        <%= render partial: 'task_table', locals: { tasks: @pending_tasks, include_actions: true } %>
       <% else %>
         <p>No pending tasks found.</p>
       <% end %>
@@ -53,24 +30,7 @@
     <div class="tab-pane fade" id="completed">
       <h3>Completed Tasks</h3>
       <% if @completed_tasks.any? %>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Due Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @completed_tasks.each do |task| %>
-              <tr>
-                <td><%= task.title %></td>
-                <td><%= task.description %></td>
-                <td><%= task.due_date.strftime("%d %b %Y, %I:%M %p") %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+        <%= render partial: 'task_table', locals: { tasks: @completed_tasks, include_actions: false } %>
       <% else %>
         <p>No completed tasks found.</p>
       <% end %>
@@ -80,24 +40,7 @@
     <div class="tab-pane fade" id="overdue">
       <h3>Overdue Tasks</h3>
       <% if @overdue_tasks.any? %>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Due Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @overdue_tasks.each do |task| %>
-              <tr>
-                <td><%= task.title %></td>
-                <td><%= task.description %></td>
-                <td><%= task.due_date.strftime("%d %b %Y, %I:%M %p") %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+        <%= render partial: 'task_table', locals: { tasks: @overdue_tasks, include_actions: false } %>
       <% else %>
         <p>No overdue tasks found.</p>
       <% end %>

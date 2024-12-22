@@ -16,7 +16,7 @@ Task.destroy_all
     title: "Pending Task #{i + 1}",
     description: "This is a pending task with due date in the future.",
     due_date: Time.now + (i + 1).hours,
-    status: 'pending'
+    status: :pending
   )
 end
 
@@ -26,7 +26,7 @@ end
     title: "Completed Task #{i + 1}",
     description: "This task has been completed.",
     due_date: Time.now - (i + 1).days,
-    status: 'completed'
+    status: :completed
   )
 end
 
@@ -36,7 +36,7 @@ end
     title: "Overdue Task #{i + 1}",
     description: "This task is overdue.",
     due_date: Time.now - (i + 1).hours,
-    status: 'overdue'
+    status: :overdue
   )
 end
 
@@ -46,7 +46,7 @@ end
     title: "Approaching Deadline Task #{i + 1}",
     description: "This task is due soon and should trigger a reminder.",
     due_date: Time.now + (30 - (i * 5)).minutes,
-    status: 'pending'
+    status: :pending
   )
 end
 

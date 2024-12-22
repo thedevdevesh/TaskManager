@@ -1,0 +1,28 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Due Date</th>
+      <% if local_assigns[:include_actions] %>
+        <th>Actions</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% tasks.each do |task| %>
+      <tr>
+        <td><%= task.title %></td>
+        <td><%= task.description %></td>
+        <td><%= formatted_due_date(task) %></td>
+        <% if local_assigns[:include_actions] %>
+          <td>
+            <%= link_to "Mark as Completed", mark_as_completed_task_path(task), method: :patch, class: "btn btn-success btn-sm" %>
+            <%= link_to "Edit", edit_task_path(task), class: "btn btn-primary btn-sm" %>
+            <%= link_to "Delete", task_path(task), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
