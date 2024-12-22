@@ -3,6 +3,8 @@ class TasksController < ApplicationController
 
   # Lists all tasks categorized by status
   def index
+    # Recalculate statuses for all pending tasks
+    Task.pending.each(&:update_status!)
     @pending_tasks = Task.pending.order(due_date: :asc)
     @completed_tasks = Task.completed.order(due_date: :desc)
     @overdue_tasks = Task.overdue.order(due_date: :desc)

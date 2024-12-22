@@ -57,4 +57,4 @@ end
 gem "cssbundling-rails"
 
 gem "sidekiq", "~> 7.3"
-gem "whenever", require: false
+gem "sidekiq-cron", "~> 2.0"

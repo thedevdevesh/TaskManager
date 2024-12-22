@@ -9,6 +9,13 @@ class Task < ApplicationRecord
   before_save :check_status
   after_initialize :set_default_status, if: :new_record?
 
+  # Update status dynamically
+  def update_status!
+    if due_date < Time.current && pending?
+      update!(status: :overdue)
+    end
+  end
+
   private
 
   # Sets the default status for tasks to 'pending' if not already set
