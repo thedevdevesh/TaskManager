@@ -3,9 +3,9 @@ class TasksController < ApplicationController
 
   # Lists all tasks categorized by status
   def index
-    @pending_tasks = Task.pending
-    @completed_tasks = Task.completed
-    @overdue_tasks = Task.overdue
+    @pending_tasks = Task.pending.order(due_date: :asc)
+    @completed_tasks = Task.completed.order(due_date: :desc)
+    @overdue_tasks = Task.overdue.order(due_date: :desc)
   end
 
   # Renders the new task form
