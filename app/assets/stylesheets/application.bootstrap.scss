@@ -1,2 +1,24 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
+
+.alert {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 5px;
+}
+  
+.alert-success {
+    background-color: #28a745;
+    color: white;
+}
+  
+.alert-danger {
+    background-color: #dc3545;
+    color: white;
+}
+  

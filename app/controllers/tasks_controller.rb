@@ -16,10 +16,16 @@ class TasksController < ApplicationController
   # Creates a new task
   def create
     @task = Task.new(task_params)
+    Rails.logger.debug(@task.errors.full_messages)
+
     if @task.save
-      redirect_to tasks_path, notice: "Task created successfully."
+      flash[:notice] = "Task created successfully."  # Success message
+      redirect_to tasks_path  # Redirect after successful creation
     else
-      render :new
+      Rails.logger.debug(@task.errors.full_messages)
+
+      flash.now[:alert] = "There was an error creating the task."  # Show error message if task creation fails
+      render :new  # Re-render the form if validation fails
     end
   end
 
@@ -29,25 +35,30 @@ class TasksController < ApplicationController
   # Updates an existing task
   def update
     if @task.update(task_params)
-      redirect_to tasks_path, notice: "Task updated successfully."
+      flash[:notice] = "Task updated successfully."  # Success message
+      redirect_to tasks_path  # Redirect after successful update
     else
-      render :edit
+      flash[:alert] = "There was an error updating the task."  # Show error message if update fails
+      render :edit  # Re-render the edit form if validation fails
     end
   end
 
   # Deletes a task
   def destroy
     @task.destroy
-    redirect_to tasks_path, notice: "Task deleted successfully."
+    flash[:notice] = "Task deleted successfully."  # Success message
+    redirect_to tasks_path  # Redirect after deletion
   end
 
   # Marks a task as completed
   def mark_as_completed
     if @task.pending? # Ensure only pending tasks can be marked as completed
       @task.update(status: "completed")
-      redirect_to tasks_path, notice: "Task marked as completed."
+      flash[:notice] = "Task marked as completed."
+      redirect_to tasks_path
     else
-      redirect_to tasks_path, alert: "Only pending tasks can be marked as completed."
+      flash[:alert] = "Only pending tasks can be marked as completed."
+      redirect_to tasks_path
     end
   end
 

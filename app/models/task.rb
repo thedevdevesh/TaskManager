@@ -7,6 +7,7 @@ class Task < ApplicationRecord
   # Callbacks
   before_save :set_default_status
   before_save :check_status
+  after_initialize :set_default_status, if: :new_record?
 
   # Scopes
   scope :pending, -> { where(status: "pending").order(:due_date) }

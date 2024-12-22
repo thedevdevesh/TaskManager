@@ -9,15 +9,35 @@
 
     <%= yield :head %>
 
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
+    <!-- Display Flash messages -->
+    <% flash.each do |key, message| %>
+      <div id="flash-<%= key %>" class="alert alert-<%= key == :alert ? 'danger' : 'success' %>">
+        <%= message %>
+      </div>
+    <% end %>
+
     <%= yield %>
+
+    <!-- JavaScript for auto-hide flash messages after 5 seconds -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        setTimeout(function() {
+          const flashMessages = document.querySelectorAll('.alert');
+          flashMessages.forEach(function(message) {
+            message.style.transition = 'opacity 1s';
+            message.style.opacity = '0';
+            setTimeout(function() {
+              message.style.display = 'none';
+            }, 1000); // Wait for transition to complete before hiding
+          });
+        }, 5000); // Wait for 5 seconds before starting fade-out
+      });
+    </script>
+
   </body>
 </html>
