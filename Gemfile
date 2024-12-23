@@ -43,7 +43,7 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-  gem "rspec-rails", "~> 7.0.0"
+  gem "rspec-rails", "~> 7.1.0"
   gem "rails-controller-testing"
   gem "factory_bot_rails"
   gem "pry-rails" # Adds Pry as the default Rails console
