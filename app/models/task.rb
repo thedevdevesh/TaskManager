@@ -3,7 +3,7 @@ class Task < ApplicationRecord
   before_update :reset_check_remainder, if: :status_changed?
 
   # Validations
-  validates :title, presence: true, uniquness: true
+  validates :title, presence: true, uniqueness: true
   validates :due_date, presence: true
 
   private
